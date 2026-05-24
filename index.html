@@ -28,43 +28,75 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
+
+        /* Hero — fills entire viewport */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 600px;
+            width: 100%;
+            background-image: url('tedxtum_welpe.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(0,0,0,0.15) 0%,
+                rgba(0,0,0,0.05) 40%,
+                rgba(0,0,0,0.35) 75%,
+                rgba(0,0,0,0.75) 100%
+            );
+        }
+        .hero-content {
+            position: absolute;
+            bottom: 4rem;
+            left: 0;
+            right: 0;
+            padding: 0 3rem;
+            z-index: 2;
+        }
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 300;
+            font-style: italic;
+            font-size: clamp(5rem, 14vw, 11rem);
+            line-height: 0.85;
+            letter-spacing: -0.02em;
+            color: #fbf9f6;
+            text-shadow: 0 2px 30px rgba(0,0,0,0.4);
+        }
+        .scroll-cue {
+            position: absolute;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(251, 249, 246, 0.7);
+            font-size: 0.85rem;
+            font-style: italic;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            z-index: 2;
+            animation: bob 2.4s ease-in-out infinite;
+        }
+        @keyframes bob {
+            0%, 100% { transform: translate(-50%, 0); opacity: 0.7; }
+            50% { transform: translate(-50%, 6px); opacity: 1; }
+        }
+
+        /* Content */
         .container {
             max-width: 780px;
             margin: 0 auto;
             padding: 5rem 1.5rem 4rem;
         }
-        .header {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2.5rem;
-            align-items: end;
-            margin-bottom: 3.5rem;
-        }
-        h1 {
-            font-family: 'Cormorant Garamond', serif;
-            font-weight: 300;
-            font-style: italic;
-            font-size: clamp(4.5rem, 11vw, 7.5rem);
-            line-height: 0.9;
-            letter-spacing: -0.02em;
-            color: var(--accent);
-        }
-        .photo-frame {
-            overflow: hidden;
-            border-radius: 2px;
-        }
-        .photo {
-            width: 100%;
-            height: auto;
-            display: block;
-            filter: contrast(1.03) saturate(0.95);
-            transition: transform 0.6s ease;
-        }
-        .photo-frame:hover .photo {
-            transform: scale(1.02);
-        }
         .bio {
-            font-size: 1.15rem;
+            font-size: 1.2rem;
             margin-bottom: 1rem;
             max-width: 62ch;
         }
@@ -133,6 +165,41 @@
         .elsewhere a:hover::after {
             width: 100%;
         }
+        .photos {
+            display: flex;
+            gap: 1.75rem;
+            flex-wrap: wrap;
+            margin-top: 0.25rem;
+        }
+        .photo-item {
+            display: block;
+            text-decoration: none;
+            border: none;
+            color: var(--text);
+        }
+        .photo-item img {
+            width: 200px;
+            height: auto;
+            display: block;
+            filter: contrast(1.02);
+            transition: transform 0.4s ease;
+        }
+        .photo-item:hover img {
+            transform: scale(1.02);
+        }
+        .photo-item .caption {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--muted);
+            font-style: italic;
+        }
+        .photo-credit {
+            margin-top: 1.75rem;
+            font-size: 0.85rem;
+            color: var(--muted);
+            font-style: italic;
+            letter-spacing: 0.05em;
+        }
         footer {
             margin-top: 5rem;
             padding-top: 2rem;
@@ -142,11 +209,11 @@
             font-style: italic;
             letter-spacing: 0.05em;
         }
+
         @media (max-width: 640px) {
-            .header {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-                align-items: start;
+            .hero-content {
+                padding: 0 1.5rem;
+                bottom: 3rem;
             }
             .container {
                 padding: 3rem 1.25rem 3rem;
@@ -157,14 +224,14 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <header class="header">
+    <section class="hero">
+        <div class="hero-content">
             <h1>Isabell</h1>
-            <div class="photo-frame">
-                <img src="tedxtum_welpe.jpg" alt="Isabell M. Welpe speaking at TEDxTUM" class="photo">
-            </div>
-        </header>
+        </div>
+        <div class="scroll-cue">Scroll</div>
+    </section>
 
+    <div class="container">
         <p class="bio">
             Prof. Dr. Isabell M. Welpe is Full Professor of Strategy and Organization at the <a href="https://www.tumcso.com/">TUM School of Management</a>, Technical University of Munich. Her expertise spans digital transformation, business model innovation, the impact of digital technologies on organizations, and the future of leadership and work.
         </p>
@@ -191,13 +258,29 @@
         <h2>Elsewhere</h2>
         <div class="elsewhere">
             <a href="https://www.tumcso.com/">TUM Chair</a>
-            <!-- EDIT: replace # with your actual URLs -->
-            <a href="#">Cambridge IfM</a>
-            <a href="#">LinkedIn</a>
-            <a href="#">Google Scholar</a>
-            <a href="#">ORCID</a>
-            <a href="#">X</a>
+            <a href="https://www.tumcso.com/research/all-projects/projects/linkedin/isabell-welpe">Personal Webpage</a>
+            <a href="https://www.linkedin.com/in/isabell-welpe-83a202/">LinkedIn</a>
+            <a href="https://docs.google.com/document/d/1THoD2yPiccUQKJ7SB0yWbo-tO0WgfdOoHaVMao7-6Pw/edit">About Me</a>
+            <a href="https://aistrategyconference.com/">AI@Strategy Conference</a>
+            <a href="https://lab2launch.de/">From Lab to Launch</a>
+            <a href="https://www.deep-tech-lab.com/">TUM Deep Tech Lab</a>
+            <a href="https://entrepreneurshipranking.com/">Entrepreneurship Impact Ranking</a>
+            <a href="https://innovation-ecosystem-research.com/">Innovation Ecosystem Research</a>
+            <a href="https://innovative-professors.com/">Innovative Professors</a>
         </div>
+
+        <h2>Photos</h2>
+        <div class="photos">
+            <a href="photo-a.jpg" class="photo-item" target="_blank">
+                <img src="photo-a.jpg" alt="Isabell M. Welpe — Portrait A">
+                <div class="caption">Photo A &mdash; 2592 × 3888</div>
+            </a>
+            <a href="photo-b.jpg" class="photo-item" target="_blank">
+                <img src="photo-b.jpg" alt="Isabell M. Welpe — Portrait B">
+                <div class="caption">Photo B &mdash; 2592 × 3888</div>
+            </a>
+        </div>
+        <p class="photo-credit">Copyright Faces by Frank</p>
 
         <footer>
             Munich · Cambridge · London
